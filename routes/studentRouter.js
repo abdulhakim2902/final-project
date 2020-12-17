@@ -11,4 +11,4 @@ router.get('/profile', Controller.profile)
 router.get('/edit', Controller.editForm)
 router.post('/edit', Controller.editProfile)
 
-module.exports = router;
+module.exports = router;  
