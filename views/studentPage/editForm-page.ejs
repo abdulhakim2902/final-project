@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        a {
+            display: block;
+            text-decoration: none;
+            background-color: red;
+            color: white;
+            text-align: center;
+            width: 93%;
+            margin: 10px auto;
+            border-radius: 5px;
+            padding: 5px;
+            box-sizing: border-box;
+            height: 30px;
+            font-weight: bold;
+            font-size: 15px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+    
+        .form {
+            width: 500px;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+    
+        .form div {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    
+        .form input,
+        .form select,
+        button {
+            width: 93%;
+            height: 30px;
+            border-radius: 4px;
+            background-color: transparent;
+        }
+    
+        .form input {
+            box-sizing: border-box;
+        }
+    
+        .new-user {
+            margin-top: 15px;
+        }
+    
+        button {
+            background-color: rgb(0, 160, 104);
+            color: white;
+            font-weight: bold;
+            margin-left: 17.5px;
+            border: 1px solid transparent;
+        }
+    
+        .form #fullname,
+        .form #birth {
+            display: inline-block;
+            width: 46%;
+        }
+    
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+   
+    <div class="form">
+        <h1>Edit Profile</h1>
+        <form action="/students/edit?id=<%= student.id %>" method="POST">
+    
+            <div>
+                <input id="fullname" type="text" name="first_name" value="<%= student.first_name %>">
+                <input id="fullname" type="text" name="last_name" value="<%= student.last_name %>">
+            </div>
+            <div>
+                <input type="text" name="email" value="<%= student.email %>">
+            </div>
+    
+            <div>
+                <input id="birth" type="text" name="birth_place" value="<%= student.birth_place%>">
+                <input id="birth" type="date" name="birth_date" value="<%= student.birth_date %>">
+            </div>
+    
+            <div>
+                <select name="gender">
+                    <option selected disabled value="">--Select Gender--</option>
+                    <option <%= student.gender === 'male' ? 'selected' : '' %> value="male">Male</option>
+                    <option <%= student.gender === 'female' ? 'selected' : '' %> value="female">Female</option>
+                </select>
+            </div>
+    
+            <button>Update</button>
+    
+        </form>
+        <a href="/students?id=<%= student.id %>">Cancel</a>
+    </div>
+</body>
+
+</html>

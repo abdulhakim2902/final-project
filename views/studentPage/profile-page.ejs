@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .container {
+            width: 80%;
+            margin: 100px auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        tr th {
+            background-color: rgb(189, 228, 247);
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid rgb(232, 232, 232);
+        }
+
+        .edit-container a {
+            text-decoration: none;
+            padding: 5px 20px;
+            border-radius: 3px;
+            font-size: 15px;    
+            color: white;
+            background-color: rgb(3, 80, 3);
+            
+        }
+        .edit-container {
+            margin-top: 30px;
+        }
+    </style>
+    <title>Profile</title>
+</head>
+<body>
+    <%- include('../partials/navbar', {title:'profile', id}) %>
+    <div class="container">
+        <h1>Student Profile</h1>
+        <table>
+            <tr>
+                <td>Fullname</td>
+                <td>
+                    <%= student.fullname() %>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Email</td>
+                <td>
+                    <%= student.email %>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <%= student.gender %>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Place and Date of Birth</td>
+                <td>
+                    <%= formatBirth(student.birth_place, student.birth_date) %>
+                </td>
+            </tr>
+        </table>
+
+        <div class="edit-container">
+            <a href="/students/edit?id=<%= student.id %>">Edit</a>
+        </div>
+    </div>
+    
+</body>
+</html>

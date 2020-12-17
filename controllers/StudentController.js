@@ -116,6 +116,47 @@ class Controller {
                 res.render('studentPage/detail-page', {course, id: user_id})
             })
     }
+
+    static profile(req, res) {
+        let id = req.query.id;
+
+        User.findByPk(id)
+            .then(student => {
+                // let editStudent = {
+                //     fullname: student.fullname(),
+                //     email: student.email,
+                //     gender: student.gender,
+                //     birth_place
+                // }
+                res.render('studentPage/profile-page', {student, id})}
+            )
+            .catch(err => res.send(err))
+    }
+
+    static editForm(req, res) {
+        let id = +req.query.id;
+
+        User.findByPk(id)
+            .then(student => res.render('studentPage/editForm-page', {student}))
+            .catch(err => res.send(err))
+    }
+
+    static editProfile(req, res) {
+        let id = +req.query.id;
+        let editStudent = {
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            birth_place: req.body.birth_place,
+            birth_date: req.body.birth_date,
+            gender: req.body.gender
+        }
+
+        User.update(editStudent, {where: {id}})
+            .then(() => res.redirect(`/students/profile?id=${id}`))
+            .catch(err => res.send(err))
+
+    }
 }
 
 module.exports = Controller;
