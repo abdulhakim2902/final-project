@@ -51,7 +51,8 @@ class Controller {
             email: req.body.email,
             birth_place: req.body.birth_place,
             birth_date: req.body.birth_date,
-            gender: req.body.gender
+            gender: req.body.gender,
+            img: ''
         }
 
         if (!newUser.gender) newUser.gender = '';
