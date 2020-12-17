@@ -59,13 +59,13 @@ class Controller {
         User.create(newUser)
             .then(() => res.redirect('/login'))
             .catch(err => {
-                let errors = []
+                let error = []
 
                 err.errors.forEach(e => {
-                    errors.push(e.message)
+                    error.push(e.message)
                 })
                 
-                res.redirect(`/register?err=${errors}`)
+                res.redirect(`/register?err=${error}`)
             })
     }
 }
