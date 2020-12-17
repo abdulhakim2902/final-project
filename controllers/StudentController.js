@@ -118,6 +118,7 @@ class Controller {
                 console.log(course.Users);
                 res.render('studentPage/detail-page', {course, id: user_id})
             })
+            .catch(err => res.send(err))
     }
 
     static profile(req, res) {
