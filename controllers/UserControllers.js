@@ -58,7 +58,7 @@ class Controller {
         if (!newUser.gender) newUser.gender = '';
 
         User.create(newUser)
-            .then(() => res.redirect('/login'))
+            .then(uaer => res.redirect('/login'))
             .catch(err => {
                 let error = []
 
