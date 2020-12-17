@@ -3,8 +3,8 @@ const routes = require('./routes')
 const session = require('express-session')
 const formatBirth = require('./helpers/formatBirth')
 const app = express();
-// const port = process.env.PORT || 3000;
-app.set('port', (process.env.PORT || 5000));
+const port = process.env.PORT ;
+// app.set('port', (process.env.PORT || 5000));
 
 app.use(session({
     secret: 'hacktiv8',
@@ -19,9 +19,9 @@ app.use(express.static(__dirname + '/public'))
 
 app.use(routes);
 
-// app.listen(port, () => {
-//     console.log(`Listening on localhost:${port}`);
-// })
-app.listen(app.get('port'), function () {
-    console.log('Node server is running on port ' + app.get('port'));
-});
+app.listen(port, () => {
+    console.log(`Listening on localhost:${port}`);
+})
+// app.listen(app.get('port'), function () {
+//     console.log('Node server is running on port ' + app.get('port'));
+// });
