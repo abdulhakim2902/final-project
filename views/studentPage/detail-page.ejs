@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Students</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .container {
+            width: 80%;
+            margin: 100px auto;
+        }
+
+        h2 {
+            background-color: lightgray;
+            margin-left: 25px;
+            border-radius: 5px;
+            padding: 5px 20px 5px 20px;
+            width: 50%;
+            height: 30px;
+        }
+
+        h4 {
+            margin-bottom: 5px;
+
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        tr th {
+            background-color: rgb(189, 228, 247);
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid rgb(232, 232, 232);
+        }
+
+        .detail {
+            text-decoration: none;
+            padding: 2px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            color: white;
+            background-color: rgb(29, 102, 29);
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../partials/navbar', {title:'', id}) %>
+        <div class="container">
+            <h3><%= course.lecturer %></h3>
+            <h2>
+                <%= course.course_name %>
+            </h2>
+            <h4>List Students</h4>
+            <table>
+                <tr>
+                    <th>Student Name</th>
+                </tr>
+
+                <% for (let i=0; i < course.Users.length; i++) { %>
+
+                <tr>
+                    <td>
+                        <%= course.Users[i].fullname() %>
+                    </td>
+                </tr>
+                <% } %>
+            </table>
+        </div>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+[
+    {
+        "course_name": "Fisika Matematika I",
+        "credits": 3,
+        "lecturer": "Prof. Abdul Waris, M.Eng. Ph.D"
+    },
+    {
+        "course_name": "Mekanika",
+        "credits": 4,
+        "lecturer": "Dr.Eng. Dwi Irwanto, M.Si., M.Eng."
+    },
+    {
+        "course_name": "Termodinamika",
+        "credits": 3,
+        "lecturer": "Dr.rer.nat. Freddy Haryanto"
+    },
+    {
+        "course_name": "Elektronika",
+        "credits": 4,
+        "lecturer": "Dr. Nur Asiah Aprianti, M.Si."
+    },
+    {
+        "course_name": "Fisika Modern",
+        "credits": 3,
+        "lecturer": "Dr. Siti Nurul Khotimah, M.Sc."
+    },
+    {
+        "course_name": "Analisis Numerik",
+        "credits": 3,
+        "lecturer": "Dr.rer.nat. Sparisoma Viridi, M.Si."
+    },
+    {
+        "course_name": "Gelombang",
+        "credits": 3,
+        "lecturer": "Syeilendra Pramuditya, M.Eng., Ph.D"
+    },
+    {
+        "course_name": "Fisika Lingkungan",
+        "credits": 2,
+        "lecturer": "Dr. Hendro, MS."
+    },
+    {
+        "course_name": "Fisika Terapan",
+        "credits": 2,
+        "lecturer": "Dr. Wahyu Hidayat, M.Si."
+    }
+]

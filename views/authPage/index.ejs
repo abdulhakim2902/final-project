@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        a {
+            text-decoration: none;
+
+        }
+
+        #loginForm {
+            width: 250px;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+
+        #loginForm div {
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        #loginForm input,
+        #loginForm select,
+        button {
+            width: 100%;
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        #loginForm input {
+            box-sizing: border-box;
+        }
+
+        .new-user {
+            margin-top: 15px;
+        }
+
+        button {
+            background-color: rgb(69, 69, 160);
+            color: white;
+            font-weight: bold;
+            border: 1px solid transparent;
+        }
+
+        .errors {
+            width: 250px;
+            height: 10px;
+        }
+
+        .errors span {
+            color: red;
+            text-align: left;
+            font-size: 10px;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loginForm">
+        <div class="errors"><span>
+                <%= errors.login %>
+            </span></div>
+        <form action="/login" method="POST">
+            <div class="errors"><span>
+                    <%= errors.username %>
+                </span></div>
+            <div>
+                <input type="text" name="username" placeholder="username">
+            </div>
+            <div class="errors"><span>
+                    <%= errors.password %>
+                </span></div>
+            <div>
+                <input type="password" name="password" placeholder="password">
+            </div>
+
+            <button>Log In</button>
+        </form>
+
+        <div class="new-user">
+            <a href="/register">Create New Account</a>
+        </div>
+    </div>
+</body>
+
+</html>

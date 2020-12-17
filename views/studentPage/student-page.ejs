@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .container {
+            width: 80%;
+            margin: 100px auto;
+        }
+
+        h2 {
+            background-color: lightgray;
+            margin-left: 25px;
+            border-radius: 5px;
+            padding: 5px 20px 5px 20px;
+            width: 50%;
+        }
+
+        h4 {
+            margin-bottom: 5px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        tr th {
+            background-color: rgb(189, 228, 247);
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid rgb(232, 232, 232);
+        }
+        .cancel, .detail {
+            text-decoration: none;
+            padding: 2px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            color: white;
+
+        }
+
+        .cancel {
+            background-color: red;
+        }
+
+        .detail {
+            background-color: rgb(3, 80, 3);
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../partials/navbar', {title: 'home', id: student.id}) %>
+
+        <div class="container">
+            <h2>
+                <%= student.fullname() %>
+            </h2>
+            <h4>List Courses</h4>
+            <table>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+
+                    <th>Lecturer</th>
+                    <th>Action</th>
+                </tr>
+                <% let total=0 %>
+                    <% for (let i=0; i < student.Courses.length; i++) { %>
+
+                    <tr>
+                        <td>
+                            <%= student.Courses[i].course_name %>
+                        </td>
+                        <td>
+                            <%= student.Courses[i].credits %>
+                        </td>
+
+                        <td>
+                            <%= student.Courses[i].lecturer %>
+                        </td>
+                        <td>
+                            <a class="detail" href="/students/detail?id=<%= student.id %>&course_id=<%= student.Courses[i].id%>">Detail</a>
+                            <a class="cancel" href="/students/cancel?id=<%= student.id %>&course_id=<%= student.Courses[i].id%>">Cancel</a>
+                        </td>
+
+                    </tr>
+                    <% total +=student.Courses[i].credits %>
+
+                    <% } %>
+
+                    <tr>
+                        <td style="font-weight: bold;">Total credits:</td>
+                        <td style="font-weight: bold;">
+                            <%= total %>
+                        </td>
+                    </tr>
+            </table>
+        </div>
+</body>
+
+</html>

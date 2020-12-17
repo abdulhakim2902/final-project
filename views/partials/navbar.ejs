@@ -1,0 +1,49 @@
+<style>
+    nav {
+        background-color: rgb(10, 131, 172);
+        position: fixed;
+        width: 100%;
+        top: 0;
+    }
+
+    .left-bar {
+        margin-left: 45px;
+        float: left;
+        box-sizing: border-box;
+    }
+
+    .right-bar {
+        float: right;
+    }
+
+    nav a {
+        display: inline-block;
+        text-decoration: none;
+        color: white;
+        padding: 20px;
+        transition: background-color 800ms ease-out;
+        box-sizing: border-box;
+    }
+
+    nav a:hover {
+        background-color: lightcoral;
+    }
+
+    .home,
+    .profile,
+    .courses {
+        background-color: lightcoral;
+    }
+</style>
+
+<nav>
+    <div class="left-bar">
+        <a class="<%= title === 'home' ?  'home' : '' %>" href="/students?id=<%= id %>">Home</a><a
+            class="<%= title === 'profile' ?  'profile' : '' %>" href="/students/profile?id=<%= id %>">Profile</a><a
+            class="<%= title === 'courses' ?  'courses' : '' %>" href="/students/courses?id=<%= id %>">Courses</a>
+    </div>
+
+    <div class="right-bar">
+        <a href="">Log Out</a>
+    </div>
+</nav>
