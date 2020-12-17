@@ -15,11 +15,6 @@
             width: 100%;
         }
 
-        tr th {
-            background-color: rgb(189, 228, 247);
-            text-align: left;
-        }
-
         th,
         td {
             padding: 10px;
@@ -47,28 +42,29 @@
         <h1>Student Profile</h1>
         <table>
             <tr>
-                <td>Fullname</td>
+                <td style="width: 10px"rowspan="4"><img width="200"src="/uploads/images/<%= !student.img ? 'default.png' : student.img %>" alt="Profile Image">    </td>
+                <td><strong>Fullname</strong></td>
                 <td>
                     <%= student.fullname() %>
                 </td>
             </tr>
 
             <tr>
-                <td>Email</td>
+                <td><strong>Email</strong></td>
                 <td>
                     <%= student.email %>
                 </td>
             </tr>
 
             <tr>
-                <td>Gender</td>
+                <td><strong>Gender</strong></td>
                 <td>
                     <%= student.gender %>
                 </td>
             </tr>
 
             <tr>
-                <td>Place and Date of Birth</td>
+                <td><strong>Place and Date of Birth</strong></td>
                 <td>
                     <%= formatBirth(student.birth_place, student.birth_date) %>
                 </td>

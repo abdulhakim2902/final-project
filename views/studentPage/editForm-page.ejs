@@ -76,7 +76,7 @@
    
     <div class="form">
         <h1>Edit Profile</h1>
-        <form action="/students/edit?id=<%= student.id %>" method="POST">
+        <form action="/students/edit?id=<%= student.id %>" method="POST" enctype="multipart/form-data">
     
             <div>
                 <input id="fullname" type="text" name="first_name" value="<%= student.first_name %>">
@@ -97,6 +97,10 @@
                     <option <%= student.gender === 'male' ? 'selected' : '' %> value="male">Male</option>
                     <option <%= student.gender === 'female' ? 'selected' : '' %> value="female">Female</option>
                 </select>
+            </div>
+
+            <div>
+                <input style="border-radius: 0;" type="file" name="image" id="">
             </div>
     
             <button>Update</button>

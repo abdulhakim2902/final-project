@@ -6,4 +6,13 @@ const isLogin = (req, res, next) => {
     }
 }
 
-module.exports = isLogin;
+const sessionChecker = (req, res, next) => {
+    if (req.session.userId) {
+        let id = req.session.userId
+        res.redirect(`/students?id=${id}`)
+    } else {
+        next()
+    }
+}
+
+module.exports = {sessionChecker, isLogin};

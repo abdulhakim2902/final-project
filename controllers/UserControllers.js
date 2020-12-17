@@ -31,10 +31,15 @@ class Controller {
                 }
             })
             .catch(err => res.send(err))
-    }
+    }   
 
     static register(req, res) {
-        res.render('authPage/register')
+        let error;
+
+        if (req.query.err) {
+            error = req.query.err.split(',')
+        }
+        res.render('authPage/register', {error})
     }
 
     static addUser(req, res) {
@@ -53,7 +58,15 @@ class Controller {
 
         User.create(newUser)
             .then(() => res.redirect('/login'))
-            .catch(err => res.send(err))
+            .catch(err => {
+                let errors = []
+
+                err.errors.forEach(e => {
+                    errors.push(e.message)
+                })
+                
+                res.redirect(`/register?err=${errors}`)
+            })
     }
 }
 

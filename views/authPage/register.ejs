@@ -69,12 +69,56 @@
         h1 {
             text-align: center;
         }
+
+        .err {
+            width: 93%;
+            height: 70px;
+            background-color: lightgrey;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+
+        .hidden {
+            width: 93%;
+            height: 70px;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+
+        .err p {
+            margin: 0;
+            padding: 1px;
+            color: red;
+            font-size: 12px;
+        }
     </style>
 </head>
 
 <body>
     <div class="form">
         <h1>Register Form</h1>
+            <% if (error) { %>
+        
+                <div class="err">
+
+            <% error.forEach(e => { %>
+            
+            <p><%= e %></p>
+            
+            <% }) %>
+
+                    </div>
+        
+            <% } else { %>
+
+                <div class="hidden"></div>
+
+            <% } %>
+
+
+
+
+
         <form action="/register" method="POST">
             <div>
                 <input type="text" name="username" placeholder="username">

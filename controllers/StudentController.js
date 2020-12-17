@@ -3,14 +3,17 @@ const {User, Course, UserCourse} = require('../models');
 class Controller {
     static viewStudentPage(req, res) {
         let id = +req.query.id;
+        let totalCredit;
 
-        User.findByPk(id, {
-            include: Course
-        })
-            .then(student => res.render('studentPage/student-page', { student, id }))
+        User.totalCredits(Course, id)
+            .then(total => {
+                totalCredit = total;
+                return User.findByPk(id, {
+                    include: Course
+                })
+            })
+            .then(student => res.render('studentPage/student-page', { student, id, totalCredit }))
             .catch(err => res.redirect('/login'))
-
-        
     }
 
     static viewCourses(req, res) {
@@ -121,15 +124,7 @@ class Controller {
         let id = req.query.id;
 
         User.findByPk(id)
-            .then(student => {
-                // let editStudent = {
-                //     fullname: student.fullname(),
-                //     email: student.email,
-                //     gender: student.gender,
-                //     birth_place
-                // }
-                res.render('studentPage/profile-page', {student, id})}
-            )
+            .then(student => { res.render('studentPage/profile-page', {student, id})})
             .catch(err => res.send(err))
     }
 
@@ -149,12 +144,24 @@ class Controller {
             email: req.body.email,
             birth_place: req.body.birth_place,
             birth_date: req.body.birth_date,
-            gender: req.body.gender
+            gender: req.body.gender,
+            img: req.file.filename
         }
+
+        console.log(editStudent);
 
         User.update(editStudent, {where: {id}})
             .then(() => res.redirect(`/students/profile?id=${id}`))
             .catch(err => res.send(err))
+
+    }
+
+    static logout(req, res) {
+
+        if (req.session.userId){
+            delete req.session.userId;
+            res.redirect('/')
+        }
 
     }
 }

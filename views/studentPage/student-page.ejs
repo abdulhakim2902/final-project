@@ -74,7 +74,6 @@
                     <th>Lecturer</th>
                     <th>Action</th>
                 </tr>
-                <% let total=0 %>
                     <% for (let i=0; i < student.Courses.length; i++) { %>
 
                     <tr>
@@ -94,14 +93,13 @@
                         </td>
 
                     </tr>
-                    <% total +=student.Courses[i].credits %>
 
                     <% } %>
 
                     <tr>
                         <td style="font-weight: bold;">Total credits:</td>
                         <td style="font-weight: bold;">
-                            <%= total %>
+                            <%= totalCredit %>
                         </td>
                     </tr>
             </table>

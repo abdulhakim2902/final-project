@@ -2,46 +2,55 @@
     {
         "course_name": "Fisika Matematika I",
         "credits": 3,
-        "lecturer": "Prof. Abdul Waris, M.Eng. Ph.D"
+        "lecturer": "Prof. Abdul Waris, M.Eng. Ph.D",
+        "max_students": 5
     },
     {
         "course_name": "Mekanika",
         "credits": 4,
-        "lecturer": "Dr.Eng. Dwi Irwanto, M.Si., M.Eng."
+        "lecturer": "Dr.Eng. Dwi Irwanto, M.Si., M.Eng.",
+        "max_students": 5
     },
     {
         "course_name": "Termodinamika",
         "credits": 3,
-        "lecturer": "Dr.rer.nat. Freddy Haryanto"
+        "lecturer": "Dr.rer.nat. Freddy Haryanto",
+        "max_students": 5
     },
     {
         "course_name": "Elektronika",
         "credits": 4,
-        "lecturer": "Dr. Nur Asiah Aprianti, M.Si."
+        "lecturer": "Dr. Nur Asiah Aprianti, M.Si.",
+        "max_students": 5
     },
     {
         "course_name": "Fisika Modern",
         "credits": 3,
-        "lecturer": "Dr. Siti Nurul Khotimah, M.Sc."
+        "lecturer": "Dr. Siti Nurul Khotimah, M.Sc.",
+        "max_students": 5
     },
     {
         "course_name": "Analisis Numerik",
         "credits": 3,
-        "lecturer": "Dr.rer.nat. Sparisoma Viridi, M.Si."
+        "lecturer": "Dr.rer.nat. Sparisoma Viridi, M.Si.",
+        "max_students": 5
     },
     {
         "course_name": "Gelombang",
         "credits": 3,
-        "lecturer": "Syeilendra Pramuditya, M.Eng., Ph.D"
+        "lecturer": "Syeilendra Pramuditya, M.Eng., Ph.D",
+        "max_students": 5
     },
     {
         "course_name": "Fisika Lingkungan",
         "credits": 2,
-        "lecturer": "Dr. Hendro, MS."
+        "lecturer": "Dr. Hendro, MS.",
+        "max_students": 5
     },
     {
         "course_name": "Fisika Terapan",
         "credits": 2,
-        "lecturer": "Dr. Wahyu Hidayat, M.Si."
+        "lecturer": "Dr. Wahyu Hidayat, M.Si.",
+        "max_students": 5
     }
 ]
