@@ -3,7 +3,7 @@ const routes = require('./routes')
 const session = require('express-session')
 const formatBirth = require('./helpers/formatBirth')
 const app = express();
-const port = process.env.PORT ;
+const port = process.env.PORT || 3000;
 // app.set('port', (process.env.PORT || 5000));
 
 app.use(session({
