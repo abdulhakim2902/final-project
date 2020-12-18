@@ -1,4 +1,5 @@
 const {User, Course, UserCourse} = require('../models');
+let upload = require('../middleware/upload')
 
 class Controller {
     static viewStudentPage(req, res) {
@@ -67,7 +68,7 @@ class Controller {
         .then(course => {
             // console.log(course);
             totalCredit += course.credits;
-            if (totalCredit < 24 || course === null) {
+            if (totalCredit <= 24 || course === null) {
                 // console.log('hey');
                 return UserCourse.findOne({
                     where: {
@@ -115,7 +116,6 @@ class Controller {
 
         Course.findOne({where: {id: course_id}, include: User})
             .then(course => {
-                console.log(course.Users);
                 res.render('studentPage/detail-page', {course, id: user_id})
             })
             .catch(err => res.send(err))
@@ -148,8 +148,6 @@ class Controller {
             gender: req.body.gender,
             img: req.file.filename
         }
-
-        console.log(editStudent);
 
         User.update(editStudent, {where: {id}})
             .then(() => res.redirect(`/students/profile?id=${id}`))
