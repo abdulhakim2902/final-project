@@ -1,5 +1,4 @@
 const {User, Course, UserCourse} = require('../models');
-const {Op} = require('sequelize')
 
 class Controller {
     static viewStudentPage(req, res) {
@@ -67,7 +66,17 @@ class Controller {
         let course_id = +req.query.course_id;
         let totalCredit = 0;
 
-        User.totalCredits(Course, user_id)
+        Course.findOne({
+            where: {id: course_id},
+            include: User
+        })
+            .then(course => {
+                if (course.Users.length < course.max_students) {
+                    return User.totalCredits(Course, user_id)
+                } else {
+                    throw new Error('The class is already full')
+                }
+            })
             .then(total => {
                 
                 if (total < 24) {
@@ -168,12 +177,10 @@ class Controller {
     }
 
     static logout(req, res) {
-
         if (req.session.userId){
             delete req.session.userId;
             res.redirect('/')
         }
-
     }
 }
 

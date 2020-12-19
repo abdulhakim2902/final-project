@@ -16,25 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Course, {foreignKey: 'user_id', through: 'UserCourses'})
     }
 
-    // static totalCredits(model, user_id) {
-    //   return new Promise((resolve, reject) => {
-    //     User.findOne({where: {id: user_id}, include: model})
-    //       .then(user => {
-    //         let totalCredit = 0;
-
-    //         if (user.Courses.length == 0) {
-    //           resolve(totalCredit)
-    //         } else {
-    //           user.Courses.forEach(e => {
-    //             totalCredit += +e.credits
-    //           })
-
-    //           resolve(totalCredit)
-    //         }
-    //       })
-    //   })
-    // }
-
     static totalCredits(model, user_id) {
       return new Promise((resolve, reject) => {
         User.findOne({
@@ -122,6 +103,9 @@ module.exports = (sequelize, DataTypes) => {
           if (!userInstance.last_name) {
             userInstance.last_name = userInstance.first_name
           }
+        },
+        afterCreate(userInstance, option) {
+          
         }
       }
   });

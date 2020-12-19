@@ -15,4 +15,12 @@ const sessionChecker = (req, res, next) => {
     }
 }
 
-module.exports = {sessionChecker, isLogin};
+const succeed = (req, res, next) => {
+    if (req.session.succeed) {
+        next()
+    } else {
+        res.redirect('/login')
+    }
+}
+
+module.exports = {sessionChecker, isLogin, succeed};

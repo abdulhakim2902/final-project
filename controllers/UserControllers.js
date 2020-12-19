@@ -58,7 +58,10 @@ class Controller {
         if (!newUser.gender) newUser.gender = '';
 
         User.create(newUser)
-            .then(uaer => res.redirect('/login'))
+            .then(() => {
+                req.session.succeed = true;
+                res.redirect('/succeed')
+            })
             .catch(err => {
                 let error = []
 
@@ -68,6 +71,15 @@ class Controller {
                 
                 res.redirect(`/register?err=${error}`)
             })
+    }
+
+    static succeed(req, res) {
+        if (req.session.succeed) {
+            req.session.succeed = false;
+            res.render('authPage/succeed');
+        } else {
+            res.redirect('/login')
+        }
     }
 }
 
