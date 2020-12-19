@@ -67,17 +67,34 @@ class Controller {
         let course_id = +req.query.course_id;
         let totalCredit = 0;
 
-        // User.totalCredits(Course, user_id)
-        //     .then(total => {
-        //         if (total )
-        //     })
+        User.totalCredits(Course, user_id)
+            .then(total => {
+                
+                if (total < 24) {
+                    totalCredit = total;
+                    return Course.findOne({
+                        where: {
+                            id: course_id
+                        }
+                    })
+                } else {
+                    throw new Error('You have taken too much credits')
+                }
+            })
+            .then(course => {
+                totalCredit += +course.credits;
 
-        UserCourse.findOne({
-            where: {
-                user_id,
-                course_id
-            }
-        })
+                if (totalCredit <= 24) {
+                    return UserCourse.findOne({
+                        where: {
+                            user_id,
+                            course_id
+                        }
+                    })
+                } else {
+                    throw new Error('You cannot add more credits')
+                }
+            })
             .then(userCourse => {
                 if (userCourse === null) {
                     return UserCourse.create({user_id, course_id, is_taken: true})
@@ -89,66 +106,8 @@ class Controller {
                     })
                 }
             })
-            .then(userCourse => res.redirect(`/students/courses?id=${user_id}`))
-
-        // Course.findOne({where: {id: course_id}, include: User})
-        // .then(course => {
-        //     let maxStudent = +course.max_students;
-        //     let numStudents = +course.Users.length;
-
-        //     if (numStudents < maxStudent) {
-        //         return User.findByPk(user_id, {
-        //             include: Course
-        //         })
-        //     } else {
-        //         res.redirect(`/students/courses?id=${user_id}&err=The class is full`)
-        //     }
-        // })
-        // .then(user => {
-        //     // console.log(user);
-        //     if (user.Courses.length === 0) {
-        //         totalCredit = 0;
-        //     } else {
-        //         user.Courses.forEach(course => {
-        //             totalCredit += +course.credits;
-        //         })
-        //     }
-
-        //     if (totalCredit < 24) {
-        //         return Course.findByPk(course_id)
-        //     } else {
-        //         res.redirect(`/students/courses?id=${user_id}&err=You have taken to much credits5`)
-        //     }
-        // })
-        // .then(course => {
-        //     // console.log(course);
-        //     totalCredit += course.credits;
-        //     if (totalCredit <= 24 || course === null) {
-        //         // console.log('hey');
-        //         return UserCourse.findOne({
-        //             where: {
-        //                 user_id,
-        //                 course_id: course.id
-        //             }
-        //         })
-        //     } else {
-                
-        //         res.redirect(`/students/courses?id=${user_id}&err=You have taken to much credits`)
-        //     }
-        // })
-        // .then(userCourse => {
-        //     // console.log(userCourse);
-        //     if (userCourse === null ) {
-        //         return UserCourse.create({ user_id, course_id})
-        //     } else {
-        //         res.redirect(`/students/courses?id=${user_id}&err=You have taken courses this course`)
-        //     }
-        // })
-        // .then(() => {
-        //         res.redirect(`/students/courses?id=${user_id}`)
-            
-        // })
-        // .catch(err => res.send(err))
+            .then(() => res.redirect(`/students/courses?id=${user_id}`))
+            .catch(err => res.redirect(`/students/courses?id=${user_id}&err=${err.message}`))
     }
 
     static cancelCourse(req, res) {
