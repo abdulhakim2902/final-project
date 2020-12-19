@@ -1,19 +1,28 @@
 const {User, Course, UserCourse} = require('../models');
-let upload = require('../middleware/upload')
+const {Op} = require('sequelize')
 
 class Controller {
     static viewStudentPage(req, res) {
         let id = +req.query.id;
         let totalCredit;
 
-        User.totalCredits(Course, id)
+        User.totalCredits(Course, id) 
             .then(total => {
                 totalCredit = total;
-                return User.findByPk(id, {
-                    include: Course
+
+                return User.findOne({
+                    where: { id },
+                    include: [{
+                        model: Course,
+                        through: {
+                            where: {
+                                is_taken: true
+                            }
+                        }
+                    }],
                 })
             })
-            .then(student => res.render('studentPage/student-page', { student, id, totalCredit }))
+            .then(student => res.render('studentPage/student-page', {student, id, totalCredit}))
             .catch(err => res.redirect('/login'))
     }
 
@@ -25,8 +34,30 @@ class Controller {
             errors = req.query.err;
         }
 
-        Course.findAll()
-            .then(courses => res.render('studentPage/courses-page', { courses, id, errors }))
+        let untakeCourses = []
+
+        Course.findAll({
+            include: {
+                model: User,
+                through: {
+                    where: {
+                        user_id: id
+                    },
+                    attributes: ['is_taken']
+                }
+            }
+        })
+            .then(courses => {
+                courses.forEach(course => {
+                    if (course.Users.length == 0) {
+                        untakeCourses.push(course)
+                    } else if (!course.Users[0].UserCourses.dataValues.is_taken) {
+                        untakeCourses.push(course)
+                    }
+                })
+            
+                res.render('studentPage/courses-page', { courses: untakeCourses, id, errors })
+            })
             .catch(err => res.send(err))
 
     }
@@ -36,76 +67,98 @@ class Controller {
         let course_id = +req.query.course_id;
         let totalCredit = 0;
 
-        Course.findOne({where: {id: course_id}, include: User})
-        .then(course => {
-            let maxStudent = +course.max_students;
-            let numStudents = +course.Users.length;
+        // User.totalCredits(Course, user_id)
+        //     .then(total => {
+        //         if (total )
+        //     })
 
-            if (numStudents < maxStudent) {
-                return User.findByPk(user_id, {
-                    include: Course
-                })
-            } else {
-                res.redirect(`/students/courses?id=${user_id}&err=The class is full`)
+        UserCourse.findOne({
+            where: {
+                user_id,
+                course_id
             }
         })
-        .then(user => {
-            // console.log(user);
-            if (user.Courses.length === 0) {
-                totalCredit = 0;
-            } else {
-                user.Courses.forEach(course => {
-                    totalCredit += +course.credits;
-                })
-            }
+            .then(userCourse => {
+                if (userCourse === null) {
+                    return UserCourse.create({user_id, course_id, is_taken: true})
+                } else {
+                    return UserCourse.update({is_taken: true}, {
+                        where: {
+                            id: userCourse.id
+                        }
+                    })
+                }
+            })
+            .then(userCourse => res.redirect(`/students/courses?id=${user_id}`))
 
-            if (totalCredit < 24) {
-                return Course.findByPk(course_id)
-            } else {
-                res.redirect(`/students/courses?id=${user_id}&err=You have taken to much credits5`)
-            }
-        })
-        .then(course => {
-            // console.log(course);
-            totalCredit += course.credits;
-            if (totalCredit <= 24 || course === null) {
-                // console.log('hey');
-                return UserCourse.findOne({
-                    where: {
-                        user_id,
-                        course_id: course.id
-                    }
-                })
-            } else {
+        // Course.findOne({where: {id: course_id}, include: User})
+        // .then(course => {
+        //     let maxStudent = +course.max_students;
+        //     let numStudents = +course.Users.length;
+
+        //     if (numStudents < maxStudent) {
+        //         return User.findByPk(user_id, {
+        //             include: Course
+        //         })
+        //     } else {
+        //         res.redirect(`/students/courses?id=${user_id}&err=The class is full`)
+        //     }
+        // })
+        // .then(user => {
+        //     // console.log(user);
+        //     if (user.Courses.length === 0) {
+        //         totalCredit = 0;
+        //     } else {
+        //         user.Courses.forEach(course => {
+        //             totalCredit += +course.credits;
+        //         })
+        //     }
+
+        //     if (totalCredit < 24) {
+        //         return Course.findByPk(course_id)
+        //     } else {
+        //         res.redirect(`/students/courses?id=${user_id}&err=You have taken to much credits5`)
+        //     }
+        // })
+        // .then(course => {
+        //     // console.log(course);
+        //     totalCredit += course.credits;
+        //     if (totalCredit <= 24 || course === null) {
+        //         // console.log('hey');
+        //         return UserCourse.findOne({
+        //             where: {
+        //                 user_id,
+        //                 course_id: course.id
+        //             }
+        //         })
+        //     } else {
                 
-                res.redirect(`/students/courses?id=${user_id}&err=You have taken to much credits`)
-            }
-        })
-        .then(userCourse => {
-            // console.log(userCourse);
-            if (userCourse === null ) {
-                return UserCourse.create({ user_id, course_id})
-            } else {
-                res.redirect(`/students/courses?id=${user_id}&err=You have taken courses this course`)
-            }
-        })
-        .then(() => {
-                res.redirect(`/students/courses?id=${user_id}`)
+        //         res.redirect(`/students/courses?id=${user_id}&err=You have taken to much credits`)
+        //     }
+        // })
+        // .then(userCourse => {
+        //     // console.log(userCourse);
+        //     if (userCourse === null ) {
+        //         return UserCourse.create({ user_id, course_id})
+        //     } else {
+        //         res.redirect(`/students/courses?id=${user_id}&err=You have taken courses this course`)
+        //     }
+        // })
+        // .then(() => {
+        //         res.redirect(`/students/courses?id=${user_id}`)
             
-        })
-        .catch(err => res.send(err))
+        // })
+        // .catch(err => res.send(err))
     }
 
     static cancelCourse(req, res) {
         let user_id = +req.query.id;
         let course_id = +req.query.course_id;
 
-        UserCourse.destroy({
-            where: {
-                user_id,
-                course_id
-            }
-        })
+        UserCourse.update({is_taken: false}, {where:{
+            user_id,
+            course_id
+        }})
             .then(() => res.redirect(`/students?id=${user_id}`))
             .catch(err => res.send(err))
     }
